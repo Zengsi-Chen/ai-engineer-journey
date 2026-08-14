@@ -1,0 +1,27 @@
+开始
+cd C:\Users\ABC\Documents\ai-engineer-journey
+
+mkdir month01\day06
+cd month01\day06
+
+py -m venv .venv
+.venv\Scripts\activate
+
+py -m pip install <需要的包>
+
+py main.py
+
+完成
+
+deactivate
+
+cd C:\Users\ABC\Documents\ai-engineer-journey
+
+git status
+git add month01/day06
+git status
+git commit -m "Day 6: ..."
+git push origin main
+git status
+
+git log --oneline --max-count=3
