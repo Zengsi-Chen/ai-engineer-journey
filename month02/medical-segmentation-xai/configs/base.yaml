@@ -1,0 +1,27 @@
+project:
+  name: "medical-segmentation-xai"
+  version: "0.1.0"
+
+task:
+  name: "binary_segmentation"
+  num_classes: 1
+
+data:
+  name: "Kvasir-SEG"
+  image_size: 256
+  image_channels: 3
+
+training:
+  batch_size: 4
+  epochs: 20
+  learning_rate: 0.001
+  weight_decay: 0.0001
+
+model:
+  name: "unet"
+
+reproducibility:
+  seed: 42
+
+device:
+  type: "auto"
