@@ -1,0 +1,77 @@
+{
+  "experiment": "day34_first_training",
+  "seed": 42,
+  "device": "cpu",
+  "image_size": 256,
+  "batch_size": 4,
+  "epochs": 3,
+  "model": "unet",
+  "features": [
+    16,
+    32,
+    64,
+    128
+  ],
+  "loss": {
+    "name": "bce_dice",
+    "bce_weight": 0.5,
+    "dice_weight": 0.5
+  },
+  "optimizer": {
+    "name": "adamw",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.5897062645639692,
+      "val_loss": 0.5413273708025614,
+      "val_dice": 0.36462197025616966,
+      "val_iou": 0.26132266730070114,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 1,
+      "train_loss": 0.5897062645639692,
+      "val_loss": 0.5413273708025614,
+      "val_dice": 0.36462197025616966,
+      "val_iou": 0.26132266730070114
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5466397772516524,
+      "val_loss": 0.520287450949351,
+      "val_dice": 0.22112054027616979,
+      "val_iou": 0.16004232344528038,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5466397772516524,
+      "val_loss": 0.520287450949351,
+      "val_dice": 0.22112054027616979,
+      "val_iou": 0.16004232344528038
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.5263657064097268,
+      "val_loss": 0.5591061361630758,
+      "val_dice": 0.21945408407598735,
+      "val_iou": 0.1460917191207409,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.5263657064097268,
+      "val_loss": 0.5591061361630758,
+      "val_dice": 0.21945408407598735,
+      "val_iou": 0.1460917191207409
+    }
+  ],
+  "best_model": {
+    "epoch": 1,
+    "val_dice": 0.36462197025616966,
+    "checkpoint_path": "C:\\Users\\ABC\\Documents\\ai-engineer-journey\\month02\\medical-segmentation-xai\\artifacts\\checkpoints\\best_model.pt"
+  }
+}

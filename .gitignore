@@ -1,10 +1,33 @@
-.venv/
+# Python
 __pycache__/
 *.py[cod]
-.pytest_cache/
-*.pyc
-.env
+*.pyo
 
-artifacts/
-**/data/
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Raw datasets
+data/raw/
+
+# Model checkpoints
+artifacts/checkpoints/
+*.pt
 *.pth
+*.ckpt
+
+# Predictions
+artifacts/predictions/
+
+# Temporary files
+*.tmp
+*.log

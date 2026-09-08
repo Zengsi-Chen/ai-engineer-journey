@@ -1,0 +1,124 @@
+{
+  "experiment": {
+    "name": "day34_trainer",
+    "seed": 42,
+    "device": "cpu"
+  },
+  "model": {
+    "name": "unet",
+    "features": [
+      16,
+      32,
+      64,
+      128
+    ]
+  },
+  "training": {
+    "epochs_requested": 10,
+    "batch_size": 4,
+    "image_size": 256,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  },
+  "scheduler": {
+    "name": "plateau",
+    "monitor": "val_dice",
+    "factor": 0.5,
+    "patience": 2,
+    "min_lr": 1e-06
+  },
+  "early_stopping": {
+    "monitor": "val_dice",
+    "patience": 3,
+    "min_delta": 0.001
+  },
+  "result": {
+    "best_epoch": 10,
+    "best_val_dice": 0.6365650836626688,
+    "stopped_early": false,
+    "epochs_completed": 10
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.5897062645639692,
+      "val_loss": 0.5413273708025614,
+      "val_dice": 0.36462197025616966,
+      "val_iou": 0.26132266730070114,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5466397772516524,
+      "val_loss": 0.520287450949351,
+      "val_dice": 0.22112054027616979,
+      "val_iou": 0.16004232344528038,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.5263657064097268,
+      "val_loss": 0.5591061361630758,
+      "val_dice": 0.21945408407598735,
+      "val_iou": 0.1460917191207409,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.49151801637240816,
+      "val_loss": 0.46845640738805133,
+      "val_dice": 0.511779959599177,
+      "val_iou": 0.37774691383043923,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.4689649934428079,
+      "val_loss": 0.4339828824996948,
+      "val_dice": 0.5156743375460306,
+      "val_iou": 0.38369097471237185,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.44054636904171535,
+      "val_loss": 0.42015551726023354,
+      "val_dice": 0.5458777769406636,
+      "val_iou": 0.4153250074386597,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.4225003513268062,
+      "val_loss": 0.40678420941034954,
+      "val_dice": 0.5487765940030416,
+      "val_iou": 0.4211504868666331,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.4059301447016852,
+      "val_loss": 0.41067936261494953,
+      "val_dice": 0.5881506729125977,
+      "val_iou": 0.4576741925875346,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.3889793048586164,
+      "val_loss": 0.37417468388875325,
+      "val_dice": 0.595886766910553,
+      "val_iou": 0.4718175180753072,
+      "learning_rate": 0.001
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.368657432283674,
+      "val_loss": 0.3726666923364004,
+      "val_dice": 0.6365650836626688,
+      "val_iou": 0.4993151052792867,
+      "learning_rate": 0.001
+    }
+  ],
+  "checkpoint": "C:\\Users\\ABC\\Documents\\ai-engineer-journey\\month02\\medical-segmentation-xai\\artifacts\\checkpoints\\best_model.pt"
+}
