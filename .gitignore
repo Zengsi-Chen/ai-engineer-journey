@@ -1,33 +1,141 @@
+# ============================================================
 # Python
+# ============================================================
+
 __pycache__/
 *.py[cod]
-*.pyo
+*$py.class
 
-# Virtual environment
+# Virtual environments
 .venv/
 venv/
 env/
+ENV/
 
-# IDE
+# Packaging
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Pytest
+.pytest_cache/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+
+# Type checking / linters
+.mypy_cache/
+.ruff_cache/
+.pyre/
+
+
+# ============================================================
+# Jupyter / IDE
+# ============================================================
+
+.ipynb_checkpoints/
+
 .vscode/
 .idea/
 
-# OS
+*.swp
+*.swo
+
+
+# ============================================================
+# Operating System
+# ============================================================
+
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Raw datasets
-data/raw/
 
-# Model checkpoints
-artifacts/checkpoints/
+# ============================================================
+# Environment / Secrets
+# ============================================================
+
+.env
+.env.*
+!.env.example
+
+
+# ============================================================
+# Month 01 — Training Data
+# ============================================================
+
+/month01/**/data/
+
+
+# ============================================================
+# Month 01 — Generated Artifacts
+# ============================================================
+
+/month01/**/artifacts/
+
+
+# ============================================================
+# Month 02 — Medical Segmentation Dataset
+# ============================================================
+
+/month02/medical-segmentation-xai/data/
+
+
+# ============================================================
+# Month 02 — Generated / Large Artifacts
+# ============================================================
+
+/month02/medical-segmentation-xai/artifacts/splits/
+/month02/medical-segmentation-xai/artifacts/checkpoints/
+/month02/medical-segmentation-xai/artifacts/predictions/
+
+
+# ============================================================
+# Model Checkpoints
+# ============================================================
+
 *.pt
 *.pth
 *.ckpt
 
-# Predictions
-artifacts/predictions/
 
-# Temporary files
-*.tmp
+# ============================================================
+# Large ML / Dataset Files
+# ============================================================
+
+*.h5
+*.hdf5
+*.onnx
+
+*.npy
+*.npz
+
+*.pkl
+*.pickle
+
+# Compressed datasets
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+
+# ============================================================
+# Logs
+# ============================================================
+
 *.log
+logs/
+
+
+# ============================================================
+# Temporary files
+# ============================================================
+
+*.tmp
+*.temp
+*.bak
+*.swp
