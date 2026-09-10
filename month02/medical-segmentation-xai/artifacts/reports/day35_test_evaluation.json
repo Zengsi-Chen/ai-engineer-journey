@@ -1,0 +1,28 @@
+{
+  "experiment": "Day 35 Final Test Evaluation",
+  "model": "UNet",
+  "features": [
+    16,
+    32,
+    64,
+    128
+  ],
+  "checkpoint": "C:\\Users\\ABC\\Documents\\ai-engineer-journey\\month02\\medical-segmentation-xai\\artifacts\\checkpoints\\best_model.pt",
+  "image_size": [
+    256,
+    256
+  ],
+  "threshold": 0.55,
+  "threshold_source": "validation_set",
+  "test_samples": 150,
+  "metrics": {
+    "mean_dice": 0.6143882855144163,
+    "mean_iou": 0.48119778935203006,
+    "mean_precision": 0.5981632498475151,
+    "mean_recall": 0.765408843703201
+  },
+  "foreground_ratio": {
+    "prediction": 0.18652537027994792,
+    "target": 0.1655768839518229
+  }
+}
