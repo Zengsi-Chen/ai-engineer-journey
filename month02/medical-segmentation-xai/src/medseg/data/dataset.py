@@ -5,6 +5,7 @@ import torch
 from PIL import Image
 from torch.utils.data import Dataset
 
+from medseg.data.augmentation import SegmentationAugmentation
 from medseg.data.preprocessing import (
     resize_image,
     resize_mask,
@@ -16,6 +17,9 @@ from medseg.data.preprocessing import (
 class SegmentationDataset(Dataset):
     """
     Dataset for binary medical image segmentation.
+
+    Augmentation is applied only to the training split.
+    Validation and test splits remain deterministic.
     """
 
     def __init__(
@@ -23,11 +27,13 @@ class SegmentationDataset(Dataset):
         manifest_path: Path,
         split: str,
         image_size: int = 256,
+        transform: SegmentationAugmentation | None = None,
     ) -> None:
 
         self.manifest_path = Path(manifest_path)
         self.split = split
         self.image_size = image_size
+        self.transform = transform
 
         manifest = pd.read_csv(self.manifest_path)
 
@@ -63,6 +69,13 @@ class SegmentationDataset(Dataset):
 
         image = resize_image(image, size)
         mask = resize_mask(mask, size)
+
+        # Apply paired augmentation before converting to tensors.
+        if self.transform is not None:
+            image, mask = self.transform(
+                image,
+                mask,
+            )
 
         image_tensor = image_to_tensor(image)
         mask_tensor = mask_to_tensor(mask)

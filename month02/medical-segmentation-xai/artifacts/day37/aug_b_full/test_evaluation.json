@@ -1,0 +1,28 @@
+{
+  "experiment": "Segmentation Test Set Evaluation",
+  "model": "UNet",
+  "features": [
+    16,
+    32,
+    64,
+    128
+  ],
+  "checkpoint": "artifacts\\day37\\aug_b_full\\best_model.pt",
+  "image_size": [
+    256,
+    256
+  ],
+  "threshold": 0.55,
+  "threshold_source": "validation_set",
+  "test_samples": 150,
+  "metrics": {
+    "mean_dice": 0.5453101409152403,
+    "mean_iou": 0.41381652279119646,
+    "mean_precision": 0.5774101524324868,
+    "mean_recall": 0.6423983304640782
+  },
+  "foreground_ratio": {
+    "prediction": 0.169967041015625,
+    "target": 0.1655768839518229
+  }
+}

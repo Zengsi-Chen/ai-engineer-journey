@@ -4,6 +4,7 @@ from pathlib import Path
 
 import numpy as np
 import torch
+import json
 
 from medseg.data.dataloader import create_segmentation_dataloader
 from medseg.models.factory import create_model
@@ -31,13 +32,6 @@ CHECKPOINT_PATH = (
     / "best_model.pt"
 )
 
-RESULT_PATH = (
-    PROJECT_ROOT
-    / "artifacts"
-    / "experiments"
-    / "day34_trainer_experiment.json"
-)
-
 
 def set_seed(seed: int) -> None:
     random.seed(seed)
@@ -46,15 +40,23 @@ def set_seed(seed: int) -> None:
 
 
 def main() -> None:
+    EXPERIMENT_NAME = "aug_b_full"
+
     seed = 42
-    set_seed(seed)
-
     device = torch.device("cpu")
-
     image_size = 256
     batch_size = 4
     num_workers = 0
     epochs = 10
+
+    AUGMENTATION_MODE = "full"
+
+    EXPERIMENT_DIR = Path("artifacts/day37") / EXPERIMENT_NAME
+    EXPERIMENT_DIR.mkdir(parents=True, exist_ok=True)
+
+    CHECKPOINT_PATH = EXPERIMENT_DIR / "best_model.pt"
+    RESULTS_PATH = EXPERIMENT_DIR / "training_results.json"
+    CONFIG_PATH = EXPERIMENT_DIR / "config.json"
 
     train_loader = create_segmentation_dataloader(
         manifest_path=MANIFEST_PATH,
@@ -63,6 +65,7 @@ def main() -> None:
         batch_size=batch_size,
         shuffle=True,
         num_workers=num_workers,
+        augmentation=AUGMENTATION_MODE,
     )
 
     val_loader = create_segmentation_dataloader(
@@ -72,6 +75,7 @@ def main() -> None:
         batch_size=batch_size,
         shuffle=False,
         num_workers=num_workers,
+        augmentation="none",
     )
 
     model = create_model(
@@ -115,6 +119,45 @@ def main() -> None:
         min_delta=0.001,
     )
 
+    experiment_config = {
+        "experiment_name": EXPERIMENT_NAME,
+        "seed": seed,
+        "device": str(device),
+        "image_size": image_size,
+        "batch_size": batch_size,
+        "num_workers": num_workers,
+        "epochs": epochs,
+        "augmentation": AUGMENTATION_MODE,
+        "model": {
+            "name": "unet",
+            "in_channels": 3,
+            "out_channels": 1,
+            "features": [16, 32, 64, 128],
+        },
+        "loss": {
+            "name": "BCEDiceLoss",
+            "bce_weight": 0.5,
+            "dice_weight": 0.5,
+        },
+        "optimizer": {
+            "name": "AdamW",
+            "learning_rate": 1e-3,
+            "weight_decay": 1e-4,
+        },
+        "scheduler": {
+            "name": "plateau",
+            "mode": "max",
+            "factor": 0.5,
+            "patience": 2,
+            "min_lr": 1e-6,
+        },
+        "threshold": 0.5,
+    }
+
+    with open(CONFIG_PATH, "w", encoding="utf-8") as f:
+        json.dump(experiment_config, f, indent=2)
+
+
     trainer = Trainer(
         model=model,
         optimizer=optimizer,
@@ -131,59 +174,24 @@ def main() -> None:
 
     result = trainer.fit()
 
-    RESULT_PATH.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    output = {
-        "experiment": {
-            "name": "day34_trainer",
-            "seed": seed,
-            "device": str(device),
-        },
-        "model": {
-            "name": "unet",
-            "features": [16, 32, 64, 128],
-        },
-        "training": {
-            "epochs_requested": epochs,
-            "batch_size": batch_size,
-            "image_size": image_size,
-            "learning_rate": 1e-3,
-            "weight_decay": 1e-4,
-        },
-        "scheduler": {
-            "name": "plateau",
-            "monitor": "val_dice",
-            "factor": 0.5,
-            "patience": 2,
-            "min_lr": 1e-6,
-        },
-        "early_stopping": {
-            "monitor": "val_dice",
-            "patience": 3,
-            "min_delta": 0.001,
-        },
-        "result": {
-            "best_epoch": result.best_epoch,
-            "best_val_dice": result.best_val_dice,
-            "stopped_early": result.stopped_early,
-            "epochs_completed": len(result.history),
-        },
+    results = {
+        "experiment_name": EXPERIMENT_NAME,
+        "best_epoch": result.best_epoch,
+        "best_val_dice": result.best_val_dice,
+        "stopped_early": result.stopped_early,
         "history": result.history,
-        "checkpoint": str(CHECKPOINT_PATH),
     }
 
-    with RESULT_PATH.open(
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
-            output,
-            file,
-            indent=2,
-        )
+    with open(RESULTS_PATH, "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=2)
+
+    print()
+    print("=" * 80)
+    print(f"Experiment: {EXPERIMENT_NAME}")
+    print(f"Results:    {RESULTS_PATH}")
+    print(f"Checkpoint: {CHECKPOINT_PATH}")
+    print(f"Config:     {CONFIG_PATH}")
+    print("=" * 80)
 
     print("=" * 60)
     print("Training Complete")
@@ -192,8 +200,6 @@ def main() -> None:
     print(f"Best Epoch: {result.best_epoch}")
     print(f"Best Val Dice: {result.best_val_dice:.6f}")
     print(f"Stopped Early: {result.stopped_early}")
-    print(f"Checkpoint: {CHECKPOINT_PATH}")
-    print(f"Experiment: {RESULT_PATH}")
     print("=" * 60)
 
 

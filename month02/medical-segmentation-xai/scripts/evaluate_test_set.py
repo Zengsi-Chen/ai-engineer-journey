@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import argparse
 import json
 
 import numpy as np
@@ -14,7 +15,7 @@ from medseg.models.unet import UNet
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
-CHECKPOINT_PATH = (
+DEFAULT_CHECKPOINT_PATH = (
     PROJECT_ROOT
     / "artifacts"
     / "checkpoints"
@@ -44,7 +45,7 @@ MASK_DIR = (
     / "masks"
 )
 
-OUTPUT_DIR = (
+DEFAULT_OUTPUT_DIR = (
     PROJECT_ROOT
     / "artifacts"
     / "reports"
@@ -60,6 +61,33 @@ IMAGE_SIZE = (256, 256)
 
 LOCKED_THRESHOLD = 0.55
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Evaluate segmentation model on the locked test set."
+    )
+
+    parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        default=DEFAULT_CHECKPOINT_PATH,
+        help="Path to model checkpoint.",
+    )
+
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=DEFAULT_OUTPUT_DIR,
+        help="Directory for evaluation outputs.",
+    )
+
+    parser.add_argument(
+        "--threshold",
+        type=float,
+        default=LOCKED_THRESHOLD,
+        help="Locked segmentation threshold.",
+    )
+
+    return parser.parse_args()
 
 def load_model(
     checkpoint_path: Path,
@@ -249,14 +277,20 @@ def resolve_image_name(
 
 def main():
 
+    args = parse_args()
+
+    checkpoint_path = args.checkpoint
+    output_dir = args.output_dir
+    locked_threshold = args.threshold
+
     print("=" * 70)
-    print("Day 35 Final Test Set Evaluation")
+    print("Segmentation Test Set Evaluation")
     print("=" * 70)
 
     print()
     print(
         "LOCKED THRESHOLD:",
-        LOCKED_THRESHOLD,
+        locked_threshold,
     )
 
     print(
@@ -275,10 +309,10 @@ def main():
     # Validate required files
     # --------------------------------------------------------
 
-    if not CHECKPOINT_PATH.exists():
+    if not checkpoint_path.exists():
         raise FileNotFoundError(
             f"Checkpoint not found: "
-            f"{CHECKPOINT_PATH}"
+            f"{checkpoint_path}"
         )
 
     if not TEST_CSV.exists():
@@ -310,13 +344,13 @@ def main():
     # --------------------------------------------------------
 
     model = load_model(
-        CHECKPOINT_PATH
+        checkpoint_path
     )
 
     segmenter = Segmenter(
         model=model,
         device="cpu",
-        threshold=LOCKED_THRESHOLD,
+        threshold=locked_threshold,
         image_size=IMAGE_SIZE,
     )
 
@@ -453,7 +487,7 @@ def main():
 
     print(
         f"Locked threshold:   "
-        f"{LOCKED_THRESHOLD:.2f}"
+        f"{locked_threshold:.2f}"
     )
 
     print()
@@ -494,14 +528,14 @@ def main():
     # Save per-image results
     # --------------------------------------------------------
 
-    OUTPUT_DIR.mkdir(
+    output_dir.mkdir(
         parents=True,
         exist_ok=True,
     )
 
     csv_path = (
-        OUTPUT_DIR
-        / "day35_test_evaluation.csv"
+        output_dir
+        / "test_evaluation.csv"
     )
 
     results_df.to_csv(
@@ -515,7 +549,7 @@ def main():
 
     summary = {
         "experiment": (
-            "Day 35 Final Test Evaluation"
+            "Segmentation Test Set Evaluation"
         ),
         "model": "UNet",
         "features": [
@@ -525,12 +559,12 @@ def main():
             128,
         ],
         "checkpoint": str(
-            CHECKPOINT_PATH
+            checkpoint_path
         ),
         "image_size": list(
             IMAGE_SIZE
         ),
-        "threshold": LOCKED_THRESHOLD,
+        "threshold": locked_threshold,
         "threshold_source": (
             "validation_set"
         ),
@@ -562,8 +596,8 @@ def main():
     }
 
     json_path = (
-        OUTPUT_DIR
-        / "day35_test_evaluation.json"
+        output_dir
+        / "test_evaluation.json"
     )
 
     with open(

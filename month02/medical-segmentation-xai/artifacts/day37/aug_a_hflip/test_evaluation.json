@@ -1,0 +1,28 @@
+{
+  "experiment": "Segmentation Test Set Evaluation",
+  "model": "UNet",
+  "features": [
+    16,
+    32,
+    64,
+    128
+  ],
+  "checkpoint": "artifacts\\day37\\aug_a_hflip\\best_model.pt",
+  "image_size": [
+    256,
+    256
+  ],
+  "threshold": 0.55,
+  "threshold_source": "validation_set",
+  "test_samples": 150,
+  "metrics": {
+    "mean_dice": 0.5766037168540296,
+    "mean_iou": 0.44715143310849914,
+    "mean_precision": 0.598097877719887,
+    "mean_recall": 0.6927718242533261
+  },
+  "foreground_ratio": {
+    "prediction": 0.1709239705403646,
+    "target": 0.1655768839518229
+  }
+}
