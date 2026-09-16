@@ -10,7 +10,7 @@ from medseg.data.dataloader import create_segmentation_dataloader
 from medseg.models.factory import create_model
 from medseg.training.checkpoint import BestModelCheckpoint
 from medseg.training.early_stopping import EarlyStopping
-from medseg.training.losses import BCEDiceLoss
+from medseg.training.losses import TverskyLoss
 from medseg.training.optimizer import create_optimizer
 from medseg.training.scheduler import create_scheduler
 from medseg.training.trainer import Trainer
@@ -40,7 +40,7 @@ def set_seed(seed: int) -> None:
 
 
 def main() -> None:
-    EXPERIMENT_NAME = "aug_b_full"
+    EXPERIMENT_NAME = "tversky_04_06"
 
     seed = 42
     device = torch.device("cpu")
@@ -49,9 +49,9 @@ def main() -> None:
     num_workers = 0
     epochs = 10
 
-    AUGMENTATION_MODE = "full"
+    AUGMENTATION_MODE = "none"
 
-    EXPERIMENT_DIR = Path("artifacts/day37") / EXPERIMENT_NAME
+    EXPERIMENT_DIR = Path("artifacts/day39") / EXPERIMENT_NAME
     EXPERIMENT_DIR.mkdir(parents=True, exist_ok=True)
 
     CHECKPOINT_PATH = EXPERIMENT_DIR / "best_model.pt"
@@ -85,9 +85,9 @@ def main() -> None:
         features=(16, 32, 64, 128),
     )
 
-    criterion = BCEDiceLoss(
-        bce_weight=0.5,
-        dice_weight=0.5,
+    criterion = TverskyLoss(
+        alpha=0.4,
+        beta=0.6,
     )
 
     optimizer = create_optimizer(
@@ -135,9 +135,10 @@ def main() -> None:
             "features": [16, 32, 64, 128],
         },
         "loss": {
-            "name": "BCEDiceLoss",
-            "bce_weight": 0.5,
-            "dice_weight": 0.5,
+            "name": "TverskyLoss",
+            "alpha": 0.4,
+            "beta": 0.6,
+            "smooth": 1.0,
         },
         "optimizer": {
             "name": "AdamW",

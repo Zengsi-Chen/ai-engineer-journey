@@ -102,3 +102,76 @@ class BCEDiceLoss(nn.Module):
             self.bce_weight * bce_loss
             + self.dice_weight * dice_loss
         )
+
+
+class TverskyLoss(nn.Module):
+    def __init__(
+        self,
+        alpha: float = 0.3,
+        beta: float = 0.7,
+        smooth: float = 1.0,
+    ) -> None:
+        super().__init__()
+
+        if alpha < 0:
+            raise ValueError(
+                "alpha must be non-negative"
+            )
+
+        if beta < 0:
+            raise ValueError(
+                "beta must be non-negative"
+            )
+
+        if alpha + beta == 0:
+            raise ValueError(
+                "At least one of alpha or beta must be positive"
+            )
+
+        if smooth <= 0:
+            raise ValueError(
+                "smooth must be positive"
+            )
+
+        self.alpha = alpha
+        self.beta = beta
+        self.smooth = smooth
+
+    def forward(
+        self,
+        logits: torch.Tensor,
+        targets: torch.Tensor,
+    ) -> torch.Tensor:
+
+        probabilities = torch.sigmoid(logits)
+
+        probabilities = probabilities.reshape(
+            probabilities.shape[0], -1
+        )
+
+        targets = targets.reshape(
+            targets.shape[0], -1
+        )
+
+        true_positive = (
+            probabilities * targets
+        ).sum(dim=1)
+
+        false_positive = (
+            probabilities * (1.0 - targets)
+        ).sum(dim=1)
+
+        false_negative = (
+            (1.0 - probabilities) * targets
+        ).sum(dim=1)
+
+        tversky = (
+            true_positive + self.smooth
+        ) / (
+            true_positive
+            + self.alpha * false_positive
+            + self.beta * false_negative
+            + self.smooth
+        )
+
+        return (1.0 - tversky).mean()

@@ -1,0 +1,28 @@
+{
+  "experiment": "Segmentation Test Set Evaluation",
+  "model": "UNet",
+  "features": [
+    16,
+    32,
+    64,
+    128
+  ],
+  "checkpoint": "artifacts\\day39\\tversky_04_06\\best_model.pt",
+  "image_size": [
+    256,
+    256
+  ],
+  "threshold": 0.55,
+  "threshold_source": "validation_set",
+  "test_samples": 150,
+  "metrics": {
+    "mean_dice": 0.5085784594932116,
+    "mean_iou": 0.36986546273276955,
+    "mean_precision": 0.4544238738044502,
+    "mean_recall": 0.786105731394796
+  },
+  "foreground_ratio": {
+    "prediction": 0.27864044189453124,
+    "target": 0.1655768839518229
+  }
+}
