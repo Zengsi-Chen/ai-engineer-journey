@@ -1,0 +1,30 @@
+{
+  "best_threshold": 0.55,
+  "best_validation_dice": 0.6366097102643216,
+  "robustness_regions": {
+    "0.50-0.60": {
+      "threshold_min": 0.5,
+      "threshold_max": 0.6,
+      "dice_min": 0.6360809896901033,
+      "dice_max": 0.6366097102643216,
+      "dice_range": 0.0005287205742182666,
+      "dice_drop_from_best": 0.0005287205742182666
+    },
+    "0.45-0.65": {
+      "threshold_min": 0.45,
+      "threshold_max": 0.65,
+      "dice_min": 0.6344138236785966,
+      "dice_max": 0.6366097102643216,
+      "dice_range": 0.0021958865857250043,
+      "dice_drop_from_best": 0.0021958865857250043
+    }
+  },
+  "operating_point": {
+    "threshold": 0.55,
+    "dice": 0.6366097102643216,
+    "iou": 0.4995141384373778,
+    "precision": 0.6437129652210128,
+    "recall": 0.7485175685988131,
+    "foreground_ratio": 0.1942432657877604
+  }
+}
