@@ -1,0 +1,28 @@
+{
+  "experiment": "Day 41 Connected Component Post-processing",
+  "model": "UNet",
+  "features": [
+    16,
+    32,
+    64,
+    128
+  ],
+  "checkpoint": "C:\\Users\\ABC\\Documents\\ai-engineer-journey\\month02\\medical-segmentation-xai\\artifacts\\checkpoints\\best_model.pt",
+  "image_size": [
+    256,
+    256
+  ],
+  "validation_samples": 150,
+  "locked_threshold": 0.55,
+  "threshold_source": "Day 40 validation",
+  "candidate_min_component_areas": [
+    0,
+    50,
+    100,
+    200,
+    500
+  ],
+  "selection_metric": "mean_validation_dice",
+  "selected_min_component_area": 200,
+  "best_validation_dice": 0.6370391213520452
+}

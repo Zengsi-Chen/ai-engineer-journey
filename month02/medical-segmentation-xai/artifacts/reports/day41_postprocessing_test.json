@@ -1,0 +1,30 @@
+{
+  "experiment": "Day 41 Locked Post-processing Test Evaluation",
+  "model": "UNet",
+  "features": [
+    16,
+    32,
+    64,
+    128
+  ],
+  "checkpoint": "C:\\Users\\ABC\\Documents\\ai-engineer-journey\\month02\\medical-segmentation-xai\\artifacts\\checkpoints\\best_model.pt",
+  "image_size": [
+    256,
+    256
+  ],
+  "test_samples": 150,
+  "threshold": 0.55,
+  "threshold_source": "Day 40 validation",
+  "min_component_area": 200,
+  "min_component_area_source": "Day 41 validation",
+  "metrics": {
+    "mean_dice": 0.6150555797907232,
+    "mean_iou": 0.4821833302519699,
+    "mean_precision": 0.5997146294648023,
+    "mean_recall": 0.7642081043172864
+  },
+  "foreground_ratio": {
+    "prediction": 0.18589375813802084,
+    "target": 0.1655768839518229
+  }
+}
