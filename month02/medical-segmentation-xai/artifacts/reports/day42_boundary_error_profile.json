@@ -1,0 +1,70 @@
+{
+  "total_validation_samples": 150,
+  "classification_rules": {
+    "good": "dice >= 0.75 and assd <= 15.0",
+    "broad_boundary_mismatch": "dice < 0.50 and assd >= 30.0",
+    "fp_dominated": "precision < 0.50 and recall >= 0.50",
+    "localized_hausdorff_outlier": "dice >= 0.75 and assd <= 15.0 and hausdorff >= 100.0",
+    "mixed_other": "all remaining samples"
+  },
+  "profile_summary": [
+    {
+      "profile": "broad_boundary_mismatch",
+      "count": 19,
+      "percentage": 12.666666666666668
+    },
+    {
+      "profile": "fp_dominated",
+      "count": 24,
+      "percentage": 16.0
+    },
+    {
+      "profile": "good",
+      "count": 40,
+      "percentage": 26.666666666666668
+    },
+    {
+      "profile": "mixed_other",
+      "count": 67,
+      "percentage": 44.666666666666664
+    }
+  ],
+  "mean_metrics_by_profile": [
+    {
+      "profile": "broad_boundary_mismatch",
+      "dice": 0.2866,
+      "iou": 0.1746,
+      "precision": 0.2223,
+      "recall": 0.6334,
+      "assd": 44.6933,
+      "hausdorff": 129.1036
+    },
+    {
+      "profile": "fp_dominated",
+      "dice": 0.5181,
+      "iou": 0.3542,
+      "precision": 0.3758,
+      "recall": 0.8925,
+      "assd": 23.7776,
+      "hausdorff": 89.1998
+    },
+    {
+      "profile": "good",
+      "dice": 0.8641,
+      "iou": 0.7628,
+      "precision": 0.8756,
+      "recall": 0.8697,
+      "assd": 7.5028,
+      "hausdorff": 55.4548
+    },
+    {
+      "profile": "mixed_other",
+      "dice": 0.6426,
+      "iou": 0.4866,
+      "precision": 0.7208,
+      "recall": 0.6572,
+      "assd": 20.2815,
+      "hausdorff": 90.5043
+    }
+  ]
+}
