@@ -1,0 +1,3 @@
+year,unique_events,timing_effect_pnl,mean_timing_effect_pnl,median_timing_effect_pnl,positive_events,negative_events,neutral_events,positive_share,mean_delay_days,median_delay_days,max_delay_days
+2023,9,2889.99999999999,321.11111111111,299.99999999999795,6,3,0,0.6666666666666666,5.222222222222222,6.0,6.0
+2024,9,820.0000000000041,91.11111111111157,360.00000000000045,5,4,0,0.5555555555555556,5.444444444444445,6.0,7.0

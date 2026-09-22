@@ -139,3 +139,53 @@ logs/
 *.temp
 *.bak
 *.swp
+
+
+# ============================================================
+# Natural Gas Backtest - final GitHub curation
+# Keep only final reproducible outputs
+# ============================================================
+
+/natural-gas-backtest/data/*
+/natural-gas-backtest/scripts/*
+/natural-gas-backtest/*.py
+
+# Final result datasets
+!/natural-gas-backtest/data/ng_normalized_backtest_summary.csv
+!/natural-gas-backtest/data/ng_normalized_annual_returns.csv
+!/natural-gas-backtest/data/ng_normalized_trade_events.csv
+!/natural-gas-backtest/data/ng_normalized_equity_curves.csv
+
+!/natural-gas-backtest/data/ng_robustness_threshold_matrix.csv
+!/natural-gas-backtest/data/ng_robustness_threshold_trades.csv
+!/natural-gas-backtest/data/ng_robustness_cagr_grid.csv
+!/natural-gas-backtest/data/ng_robustness_mdd_grid.csv
+!/natural-gas-backtest/data/ng_robustness_sharpe_grid.csv
+!/natural-gas-backtest/data/ng_robustness_total_return_grid.csv
+!/natural-gas-backtest/data/ng_robustness_final_value_grid.csv
+
+!/natural-gas-backtest/data/ng_trade_attribution.csv
+!/natural-gas-backtest/data/ng_annual_trade_attribution.csv
+!/natural-gas-backtest/data/ng_profit_concentration.csv
+!/natural-gas-backtest/data/ng_remove_one_trade.csv
+!/natural-gas-backtest/data/ng_economic_trade_attribution.csv
+
+!/natural-gas-backtest/data/ng_unique_roll_timing_audit_v6_4_summary.csv
+!/natural-gas-backtest/data/ng_unique_roll_timing_audit_v6_4_events.csv
+!/natural-gas-backtest/data/ng_unique_roll_timing_audit_v6_4_yearly.csv
+!/natural-gas-backtest/data/ng_unique_roll_timing_audit_v6_4_concentration.csv
+!/natural-gas-backtest/data/ng_unique_roll_timing_audit_v6_4_remove_one_event.csv
+!/natural-gas-backtest/data/ng_unique_roll_timing_audit_v6_4_integrity.csv
+
+!/natural-gas-backtest/data/ng_deferred_feasibility_audit_v6_4_1_summary.csv
+!/natural-gas-backtest/data/ng_deferred_feasibility_audit_v6_4_1_events.csv
+!/natural-gas-backtest/data/ng_deferred_feasibility_audit_v6_4_1_rolls.csv
+!/natural-gas-backtest/data/ng_deferred_feasibility_audit_v6_4_1_trades.csv
+!/natural-gas-backtest/data/ng_deferred_feasibility_audit_v6_4_1_roll_number.csv
+
+# Final analysis scripts
+!/natural-gas-backtest/scripts/backtest_ng_normalized.py
+!/natural-gas-backtest/scripts/ng_robustness_audit.py
+!/natural-gas-backtest/scripts/ng_trade_attribution.py
+!/natural-gas-backtest/scripts/ng_unique_roll_timing_audit_v6_4.py
+!/natural-gas-backtest/scripts/ng_deferred_feasibility_audit_v6_4_1.py

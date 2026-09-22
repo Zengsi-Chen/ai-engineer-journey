@@ -1,0 +1,14 @@
+metric,value
+total_roll_records,100.0
+feasible_roll_records,78.0
+infeasible_roll_records,22.0
+roll_level_feasibility_rate,0.78
+total_trades,33.0
+fully_feasible_trades,25.0
+partially_feasible_trades,0.0
+fully_infeasible_trades,8.0
+unique_market_events,21.0
+unique_feasible_events,18.0
+unique_infeasible_events,3.0
+unique_event_feasibility_rate,0.8571428571428571
+unique_event_state_inconsistencies,5.0
