@@ -189,3 +189,42 @@ logs/
 !/natural-gas-backtest/scripts/ng_trade_attribution.py
 !/natural-gas-backtest/scripts/ng_unique_roll_timing_audit_v6_4.py
 !/natural-gas-backtest/scripts/ng_deferred_feasibility_audit_v6_4_1.py
+
+# ============================================================
+# Gold & Silver Backtest - final GitHub curation
+# Keep only final reproducible outputs
+# ============================================================
+
+/gold-50y-backtest/data/*
+/gold-50y-backtest/scripts/*
+/gold-50y-backtest/*.py
+
+# Final datasets
+!/gold-50y-backtest/data/gold_silver_long_history.csv
+!/gold-50y-backtest/data/gold_silver_master_1968_2026_macro_sp500.csv
+!/gold-50y-backtest/data/gold_silver_perth_usd_2021_2026.csv
+
+# Phase 2 — True OOS
+!/gold-50y-backtest/data/phase2c_true_oos_annual_returns.csv
+!/gold-50y-backtest/data/phase2c_true_oos_daily_returns.csv
+
+# Phase 2 — Attribution
+!/gold-50y-backtest/data/phase2d_us10y_annual_attribution.csv
+!/gold-50y-backtest/data/phase2d_us10y_asset_regime.csv
+!/gold-50y-backtest/data/phase2d_us10y_decade_attribution.csv
+
+# Phase 3 — GSR rolling OOS
+!/gold-50y-backtest/data/phase3a5_gsr_rolling_oos.csv
+
+# Final analysis scripts
+!/gold-50y-backtest/scripts/phase1_buy_hold.py
+!/gold-50y-backtest/scripts/phase2c_us10y_true_oos.py
+!/gold-50y-backtest/scripts/phase2d_us10y_signal_attribution.py
+!/gold-50y-backtest/scripts/phase3a_gsr_event_study.py
+!/gold-50y-backtest/scripts/phase3a5_gsr_rolling_oos.py
+!/gold-50y-backtest/scripts/phase3b_gsr_conditional_audit.py
+!/gold-50y-backtest/scripts/phase3c_gsr_conditional_regime_audit.py
+
+# Exclude original raw CSV files
+/gold-50y-backtest/gold_price.csv
+/gold-50y-backtest/silver_price.csv
