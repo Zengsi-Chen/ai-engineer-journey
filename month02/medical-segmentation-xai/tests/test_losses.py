@@ -6,6 +6,7 @@ from medseg.training.losses import (
     DiceLoss,
     BCEDiceLoss,
     TverskyLoss,
+    BoundaryLoss,
 )
 
 
@@ -347,5 +348,95 @@ def test_tversky_loss_penalizes_false_negative_more_than_false_positive():
     )
 
     assert false_negative_penalty > false_positive_penalty
+
+
+def test_boundary_loss_scalar_and_finite():
+    loss_fn = BoundaryLoss()
+
+    logits = torch.randn(
+        2, 1, 16, 16,
+        requires_grad=True,
+    )
+
+    targets = torch.randint(
+        0,
+        2,
+        (2, 1, 16, 16),
+    ).float()
+
+    loss = loss_fn(logits, targets)
+
+    assert loss.ndim == 0
+    assert torch.isfinite(loss)
+    assert loss.item() >= 0.0
+
+
+def test_boundary_loss_perfect_prediction():
+    loss_fn = BoundaryLoss()
+
+    targets = torch.zeros(
+        1, 1, 8, 8,
+    )
+
+    targets[:, :, 2:6, 2:6] = 1.0
+
+    logits = torch.where(
+        targets > 0,
+        torch.full_like(targets, 20.0),
+        torch.full_like(targets, -20.0),
+    )
+
+    loss = loss_fn(logits, targets)
+
+    assert loss.item() < 1e-6
+
+
+def test_boundary_loss_backward():
+    loss_fn = BoundaryLoss()
+
+    logits = torch.randn(
+        2, 1, 16, 16,
+        requires_grad=True,
+    )
+
+    targets = torch.randint(
+        0,
+        2,
+        (2, 1, 16, 16),
+    ).float()
+
+    loss = loss_fn(logits, targets)
+    loss.backward()
+
+    assert logits.grad is not None
+    assert torch.isfinite(logits.grad).all()
+
+
+def test_boundary_loss_rejects_shape_mismatch():
+    loss_fn = BoundaryLoss()
+
+    logits = torch.randn(1, 1, 8, 8)
+    targets = torch.randn(1, 1, 16, 16)
+
+    with pytest.raises(ValueError):
+        loss_fn(logits, targets)
+
+
+def test_boundary_loss_rejects_invalid_dimensions():
+    loss_fn = BoundaryLoss()
+
+    logits = torch.randn(1, 8, 8)
+    targets = torch.randn(1, 8, 8)
+
+    with pytest.raises(ValueError):
+        loss_fn(logits, targets)
+
+
+def test_boundary_weight_validation():
+    with pytest.raises(ValueError):
+        BoundaryLoss(boundary_weight=0.5)
+
+    BoundaryLoss(boundary_weight=1.0)
+    BoundaryLoss(boundary_weight=3.0)
 
 

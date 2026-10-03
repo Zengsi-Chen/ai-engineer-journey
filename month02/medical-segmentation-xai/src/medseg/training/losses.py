@@ -175,3 +175,91 @@ class TverskyLoss(nn.Module):
         )
 
         return (1.0 - tversky).mean()
+    
+
+class BoundaryLoss(nn.Module):
+    """
+    Boundary-weighted binary cross-entropy loss.
+
+    Pixels near the target boundary receive a larger loss weight.
+    """
+
+    def __init__(
+        self,
+        boundary_weight: float = 3.0,
+    ) -> None:
+        super().__init__()
+
+        if boundary_weight < 1.0:
+            raise ValueError(
+                "boundary_weight must be >= 1.0"
+            )
+
+        self.boundary_weight = boundary_weight
+
+    def forward(
+        self,
+        logits: torch.Tensor,
+        targets: torch.Tensor,
+    ) -> torch.Tensor:
+
+        if logits.shape != targets.shape:
+            raise ValueError(
+                "logits and targets must have the same shape"
+            )
+
+        if logits.ndim != 4:
+            raise ValueError(
+                "logits and targets must have shape [B, C, H, W]"
+            )
+
+        targets = targets.float()
+
+        # Detect target boundary using local 3x3 neighborhoods.
+        padded = nn.functional.pad(
+            targets,
+            (1, 1, 1, 1),
+            mode="replicate",
+        )
+
+        neighbors = [
+            padded[:, :, 0:-2, 0:-2],
+            padded[:, :, 0:-2, 1:-1],
+            padded[:, :, 0:-2, 2:],
+            padded[:, :, 1:-1, 0:-2],
+            padded[:, :, 1:-1, 2:],
+            padded[:, :, 2:, 0:-2],
+            padded[:, :, 2:, 1:-1],
+            padded[:, :, 2:, 2:],
+        ]
+
+        neighbor_stack = torch.stack(
+            neighbors,
+            dim=0,
+        )
+
+        local_min = neighbor_stack.min(dim=0).values
+        local_max = neighbor_stack.max(dim=0).values
+
+        boundary = (
+            (local_max != local_min)
+            .float()
+        )
+
+        weights = torch.ones_like(targets)
+
+        weights = weights + (
+            self.boundary_weight - 1.0
+        ) * boundary
+
+        pixel_loss = nn.functional.binary_cross_entropy_with_logits(
+            logits,
+            targets,
+            reduction="none",
+        )
+
+        weighted_loss = (
+            pixel_loss * weights
+        )
+
+        return weighted_loss.mean()
