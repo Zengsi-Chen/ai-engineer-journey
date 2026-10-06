@@ -1,0 +1,48 @@
+{
+  "experiment_name": "boundary_005",
+  "seed": 42,
+  "device": "cpu",
+  "image_size": 256,
+  "batch_size": 4,
+  "num_workers": 0,
+  "epochs": 10,
+  "augmentation": "none",
+  "threshold": 0.55,
+  "model": {
+    "name": "unet",
+    "in_channels": 3,
+    "out_channels": 1,
+    "features": [
+      16,
+      32,
+      64,
+      128
+    ]
+  },
+  "loss": {
+    "name": "BoundaryAwareLoss",
+    "base_loss": "BCEDiceLoss",
+    "bce_weight": 0.5,
+    "dice_weight": 0.5,
+    "boundary_weight": 3.0,
+    "boundary_loss_weight": 0.05
+  },
+  "optimizer": {
+    "name": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001
+  },
+  "scheduler": {
+    "name": "plateau",
+    "mode": "max",
+    "factor": 0.5,
+    "patience": 2,
+    "min_lr": 1e-06
+  },
+  "early_stopping": {
+    "monitor": "val_dice",
+    "mode": "max",
+    "patience": 3,
+    "min_delta": 0.001
+  }
+}

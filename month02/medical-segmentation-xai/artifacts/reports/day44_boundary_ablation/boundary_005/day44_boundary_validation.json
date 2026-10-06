@@ -1,0 +1,15 @@
+{
+  "day": 44,
+  "threshold": 0.55,
+  "validation_samples": 150,
+  "valid_boundary_samples": 149,
+  "invalid_boundary_samples": 1,
+  "mean_dice": 0.6086476903101072,
+  "mean_iou": 0.47488067077500923,
+  "mean_precision": 0.6752157468836223,
+  "mean_recall": 0.6595953116517413,
+  "mean_assd": 20.381521505929676,
+  "median_assd": 18.03429185123008,
+  "mean_hausdorff": 79.64923842849082,
+  "median_hausdorff": 76.55716818169282
+}
