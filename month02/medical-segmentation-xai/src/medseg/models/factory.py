@@ -1,5 +1,6 @@
 from torch import nn
 
+from medseg.models.attention_unet import AttentionUNet
 from medseg.models.unet import UNet
 
 
@@ -13,6 +14,13 @@ def create_model(
 
     if name == "unet":
         return UNet(
+            in_channels=in_channels,
+            out_channels=out_channels,
+            features=features,
+        )
+
+    if name == "attention_unet":
+        return AttentionUNet(
             in_channels=in_channels,
             out_channels=out_channels,
             features=features,
