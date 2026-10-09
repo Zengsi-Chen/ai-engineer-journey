@@ -1,0 +1,24 @@
+version: 1
+
+price_provider:
+  name: yahoo
+
+history:
+  start: "2021-01-01"
+  frequency: "1d"
+
+update:
+  incremental: true
+
+storage:
+  raw_format: "parquet"
+  processed_format: "parquet"
+
+statistics:
+  correlation_window: 504
+  cointegration_window: 504
+  zscore_window: 252
+  min_observations: 400
+
+trading:
+  signal_delay_days: 1

@@ -1,0 +1,6 @@
+version: 1
+
+ticker_map:
+  IVN: IVN.TO
+  LUN: LUN.TO
+  FM: FM.TO

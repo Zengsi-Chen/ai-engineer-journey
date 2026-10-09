@@ -1,0 +1,162 @@
+version: 1
+
+universe:
+
+  metals:
+
+    gold_miners:
+      - AEM
+      - NEM
+      - GOLD
+      - KGC
+      - B
+
+    gold_royalty:
+      - WPM
+      - FNV
+      - RGLD
+
+    silver:
+      - PAAS
+      - HL
+      - AG
+      - CDE
+
+    copper:
+      - FCX
+      - SCCO
+      - IVN
+      - LUN
+      - TECK
+      - FM
+
+    uranium:
+      - CCJ
+
+    commodity_etfs:
+      - GLD
+      - SLV
+      - COPX
+      - CPER
+
+  semiconductors:
+
+    ai_compute:
+      - NVDA
+      - AMD
+      - AVGO
+      - MRVL
+      - MU
+      - INTC
+      - QCOM
+      - TXN
+
+    semiconductor_equipment:
+      - LRCX
+      - AMAT
+      - KLAC
+
+  ai_infrastructure:
+
+    networking:
+      - ANET
+      - CSCO
+      - CIEN
+      - CLS
+
+    optical:
+      - LITE
+      - COHR
+
+  software:
+    - ADBE
+    - CRM
+    - NOW
+    - ORCL
+    - INTU
+    - WDAY
+    - SAP
+    - PLTR
+    - SNOW
+    - PANW
+    - CRWD
+    - FTNT
+    - CHKP
+
+  financials:
+
+    banks:
+      - JPM
+      - BAC
+      - C
+      - WFC
+
+    investment_banks:
+      - GS
+      - MS
+
+    payments:
+      - V
+      - MA
+
+    asset_managers:
+      - BLK
+
+    alternatives:
+      - BX
+      - KKR
+      - APO
+
+    brokers:
+      - SCHW
+
+  power:
+
+    power_generators:
+      - VST
+      - CEG
+      - NRG
+
+    electrification:
+      - GEV
+      - ETN
+      - PWR
+
+  consumer:
+
+    apparel:
+      - LULU
+      - DECK
+      - NKE
+      - ONON
+
+    china_internet:
+      - PDD
+      - JD
+      - BABA
+
+    ecommerce:
+      - AMZN
+
+    consumer_staples:
+      - COST
+
+  internet:
+
+    platforms:
+      - META
+      - GOOGL
+
+  aerospace_defense:
+
+    space:
+      - RKLB
+
+    defense:
+      - LMT
+      - NOC
+      - RTX
+      - GD
+      - BA
+      - HII
+      - BWXT
